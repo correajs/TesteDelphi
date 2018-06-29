@@ -1,0 +1,104 @@
+BANCO DE DADOS "TESTE"
+
+-- Database: "Teste"
+
+-- DROP DATABASE "Teste";
+
+CREATE DATABASE "Teste"
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Portuguese_Brazil.1252'
+       LC_CTYPE = 'Portuguese_Brazil.1252'
+       CONNECTION LIMIT = -1;
+
+
+
+TABELA CAD_CLIENTE
+
+-- Table: public.cad_cliente
+
+-- DROP TABLE public.cad_cliente;
+
+CREATE TABLE public.cad_cliente
+(
+  nome character(70),
+  tipo character(1),
+  nomefantasia character(70),
+  endereco_rua character(50),
+  endereco_numero character(10),
+  endereco_bairros character(50),
+  endereco_cep character(10),
+  endereco_cidade character(50),
+  endereco_uf character(2),
+  telefone1 character(12),
+  telefone2 character(12),
+  telefone3 character(12),
+  cnpj character(16),
+  cpf character(12),
+  rg character(10),
+  ie character(15),
+  email1 character(50),
+  contato1 character(30),
+  status boolean,
+  telefone4 character(12),
+  codigo integer NOT NULL DEFAULT nextval('cad_cliente_codigo_seq'::regclass)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.cad_cliente
+  OWNER TO postgres;
+
+-- Index: public.cad_cliente_nome_idx
+
+-- DROP INDEX public.cad_cliente_nome_idx;
+
+CREATE INDEX cad_cliente_nome_idx
+  ON public.cad_cliente
+  USING btree
+  (nome COLLATE pg_catalog."default");
+
+
+
+TABELA CAD_PRODUTO
+
+-- Table: public.cad_produto
+
+-- DROP TABLE public.cad_produto;
+
+CREATE TABLE public.cad_produto
+(
+  codigo integer NOT NULL DEFAULT nextval('cad_produtos_codigo_seq'::regclass),
+  nome character(50),
+  unidade character(3),
+  preco numeric(12,2),
+  CONSTRAINT cad_produtos_codigo PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.cad_produto
+  OWNER TO postgres;
+
+
+TABELA VENDAS
+
+-- Table: public.vendas
+
+-- DROP TABLE public.vendas;
+
+CREATE TABLE public.vendas
+(
+  codigo integer NOT NULL DEFAULT nextval('vendas_codigo_seq'::regclass),
+  cliente integer,
+  datavenda date,
+  produto integer,
+  quantidade numeric(12,2),
+  CONSTRAINT vendas_codigo PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.vendas
+  OWNER TO postgres;
